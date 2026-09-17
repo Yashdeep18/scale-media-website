@@ -1,0 +1,1 @@
+Replace this file with your real Scale Media logo as /public/logo.png (or update the logo component in app/page.tsx). The current UI uses a minimal S mark so the site works immediately.

@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { CSSProperties } from "react";
 import {
   ArrowRight, BarChart3, Bot, Code2, Globe2, Megaphone, Search,
   Smartphone, Sparkles, Target, TrendingUp, Users, X, Menu,
   Instagram, Linkedin, Facebook, Youtube, Check
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-const services = [
+const services: [string, string, string, LucideIcon][] = [
   ["01","Website Design & Development","High-converting websites engineered to turn attention into action.",Globe2],
   ["02","Meta Ads","Facebook & Instagram campaigns built around testing, tracking and profitable growth.",Megaphone],
   ["03","Google Ads","Capture high-intent demand with search, shopping, PMax and remarketing.",Search],
@@ -81,7 +83,7 @@ export default function Home() {
     return () => clearInterval(id);
   }, []);
 
-  return <main style={{"--mx":`${cursor.x}%`,"--my":`${cursor.y}%`} as React.CSSProperties}>
+  return <main style={{"--mx":`${cursor.x}%`,"--my":`${cursor.y}%`} as CSSProperties}>
     <FloatingBackground />
     <nav className="nav">
       <a href="#home" className="brand"><span className="brand-mark">S</span><span>Scale<span>Media</span></span></a>
@@ -124,12 +126,12 @@ export default function Home() {
 
     <section className="stats section">
       <div className="section-intro"><span className="kicker">BUILT FOR MEASURABLE GROWTH</span><h2>Attention is nice.<br/><span>Growth is better.</span></h2></div>
-      <div className="stat-grid">{stats.map(([n,l])=><div className="stat" key={l}><strong>{n}</strong><span>{l}</span></div>)}</div>
+      <div className="stat-grid">{stats.map(([n,l], i)=><div className="stat" key={i}><strong>{n}</strong><span>{l}</span></div>)}</div>
     </section>
 
     <section id="services" className="section services">
       <div className="heading-row"><div><span className="kicker">WHAT WE DO</span><h2>Everything you need<br/><span>to scale.</span></h2></div><p>Strategy, creative, media, technology and analytics — connected into one growth system.</p></div>
-      <div className="service-grid">{services.map(([num,title,desc,Icon])=><article className="service-card" key={num}><span className="num">{num}</span><div className="icon"><Icon/></div><h3>{title}</h3><p>{desc}</p><a href="#contact"><ArrowRight size={18}/></a></article>)}</div>
+      <div className="service-grid">{services.map(([num,title,desc,Icon],i)=><article className="service-card" key={i}><span className="num">{num}</span><div className="icon"><Icon /></div><h3>{title}</h3><p>{desc}</p><a href="#contact"><ArrowRight size={18}/></a></article>)}</div>
     </section>
 
     <section id="work" className="section ecosystem">
@@ -154,12 +156,12 @@ export default function Home() {
 
     <section id="process" className="section process">
       <div className="center-heading"><span className="kicker">HOW WE WORK</span><h2>From idea <span>to scale.</span></h2></div>
-      <div className="steps">{steps.map(([n,t,d],i)=><div className="step" key={n}><div className="step-num">{n}</div><div><h3>{t}</h3><p>{d}</p></div>{i<5&&<ArrowRight className="step-arrow"/>}</div>)}</div>
+      <div className="steps">{steps.map(([n,t,d],i)=><div className="step" key={i}><div className="step-num">{n}</div><div><h3>{t}</h3><p>{d}</p></div>{i<5&&<ArrowRight className="step-arrow"/>}</div>)}</div>
     </section>
 
     <section className="section cases">
       <div className="center-heading"><span className="kicker">SELECTED WORK</span><h2>Built <span>to perform.</span></h2></div>
-      <div className="case-grid">{cases.map(([a,b,c],i)=><article className="case" key={a}><div className={`case-art art${i+1}`}><div className="fake-window"><div/><div/><div/></div><span>{c}</span></div><div className="case-meta"><div><b>{a}</b><small>{b}</small></div><ArrowRight/></div></article>)}</div>
+      <div className="case-grid">{cases.map(([a,b,c],i)=><article className="case" key={i}><div className={`case-art art${i+1}`}><div className="fake-window"><div/><div/><div/></div><span>{c}</span></div><div className="case-meta"><div><b>{a}</b><small>{b}</small></div><ArrowRight/></div></article>)}</div>
     </section>
 
     <section id="about" className="section why">
@@ -175,7 +177,7 @@ export default function Home() {
     </section>
 
     <section id="testimonials" className="section testimonials">
-      <div className="testimonial-main"><span className="kicker">CLIENT VOICE</span><h2>What clients<br/><span>say.</span></h2><div className="quote">★★★★★</div><blockquote>{testimonials[testimonial][0]}</blockquote><p className="author">— {testimonials[testimonial][1]}</p><div className="dots">{testimonials.map((_,i)=><button className={i===testimonial?"active":""} onClick={()=>setTestimonial(i)} key={i}/>)}</div></div>
+      <div className="testimonial-main"><span className="kicker">CLIENT VOICE</span><h2>What clients<br/><span>say.</span></h2><div className="quote">★★★★★</div><blockquote>{testimonials[testimonial][0]}</blockquote><p className="author">— {testimonials[testimonial][1]}</p><div className="dots">{testimonials.map((_,i)=><button type="button" className={i===testimonial?"active":""} onClick={()=>setTestimonial(i)} key={i}/>)}</div></div>
       <div className="quote-orb">“</div>
     </section>
 
@@ -184,7 +186,7 @@ export default function Home() {
       <form className="contact-form" onSubmit={e=>e.preventDefault()}>
         <div className="field-row"><label>Name<input placeholder="Your name"/></label><label>Email<input type="email" placeholder="you@company.com"/></label></div>
         <div className="field-row"><label>Company<input placeholder="Company name"/></label><label>Phone<input placeholder="+91 XXXXX XXXXX"/></label></div>
-        <div className="field-row"><label>Service<select defaultValue=""><option value="" disabled>Select a service</option>{services.map(s=><option key={s[1]}>{s[1]}</option>)}</select></label><label>Budget<select defaultValue=""><option value="" disabled>Select budget</option><option>₹25K – ₹50K</option><option>₹50K – ₹1L</option><option>₹1L – ₹3L</option><option>₹3L+</option></select></label></div>
+        <div className="field-row"><label>Service<select defaultValue=""><option value="" disabled>Select a service</option>{services.map((s,i)=><option key={i}>{s[1]}</option>)}</select></label><label>Budget<select defaultValue=""><option value="" disabled>Select budget</option><option>₹25K – ₹50K</option><option>₹50K – ₹1L</option><option>₹1L – ₹3L</option><option>₹3L+</option></select></label></div>
         <label>Message<textarea placeholder="Tell us about your project..."/></label>
         <button className="btn primary submit">Send Inquiry <ArrowRight size={18}/></button>
       </form>
